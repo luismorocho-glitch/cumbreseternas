@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cumbres Eternas — Turismo</title>
+  <meta name="description" content="Plantilla de turismo para Cumbres Eternas con hero, noticias, tours y contacto." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --primary:#1e7a5f;           /* verde montaña */
+      --primary-600:#186a52;
+      --dark:#0b1f1b;              /* verde muy oscuro para footer */
+      --text:#1f2937;
+      --muted:#6b7280;
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --shadow:0 10px 30px rgba(0,0,0,.12);
+      --radius:18px;
+      --container:1200px;
+      --whatsapp:#25d366;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:"Poppins", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial; color:var(--text); background:var(--bg); line-height:1.55}
+    img{max-width:100%; display:block}
+    a{color:inherit; text-decoration:none}
+    .container{width:min(92%, var(--container)); margin-inline:auto}
+    .btn{display:inline-flex; align-items:center; gap:.5rem; padding:.85rem 1.15rem; border-radius:12px; border:2px solid transparent; font-weight:600; cursor:pointer}
+    .btn-primary{background:var(--primary); color:#fff}
+    .btn-primary:hover{background:var(--primary-600)}
+    .btn-outline{background:#fff; border-color:#e5e7eb}
+
+    header{position:sticky; top:0; z-index:50; background:#fff; border-bottom:1px solid #e5e7eb}
+    .nav{height:70px; display:flex; align-items:center; justify-content:space-between; gap:1rem}
+    .brand{display:flex; align-items:center; gap:.7rem; font-family:Montserrat, sans-serif; font-weight:800; letter-spacing:.3px}
+    .menu{display:flex; align-items:center; gap:1.1rem}
+    .menu a{font-weight:500}
+    .burger{display:none; background:transparent; border:0; font-size:1.5rem}
+    @media (max-width: 900px){ .menu{display:none} .burger{display:block} }
+
+    .mobile{display:none; position:fixed; inset:70px 0 0; background:#ffffff; padding:1rem; z-index:40}
+    .mobile a{display:block; padding:1rem; border-bottom:1px solid #eee}
+
+    .hero{position:relative; background:#fff}
+    .hero-top{position:relative; padding-top:24px; background:linear-gradient(180deg,#ffffff 0%, #ffffff 40%, rgba(255,255,255,0) 100%);}
+    .hero-top::before{content:""; position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1526481280698-8fcc13fd9d0d?q=80&w=2069&auto=format&fit=crop') center/cover no-repeat; opacity:.18; mix-blend:overlay}
+    .hero-inner{position:relative; z-index:1; display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; padding:2rem 0 2.5rem}
+    .title{font-family:Montserrat, sans-serif; font-weight:800; font-size:clamp(2rem,4vw,3rem); text-transform:uppercase; letter-spacing:.04em}
+    .lede{margin-top:.6rem; color:#111827; font-weight:700}
+    .hero-img{border-radius:16px; overflow:hidden; box-shadow:var(--shadow)}
+    @media (max-width: 900px){ .hero-inner{grid-template-columns:1fr} }
+
+    .section-band{background:#fff; border-top:1px solid #eee; border-bottom:1px solid #eee; padding:1rem 0; text-align:center; font-weight:700; letter-spacing:.02em}
+
+    section{padding:70px 0}
+    .news-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:1rem}
+    @media (max-width: 1100px){ .news-grid{grid-template-columns:1fr 1fr 1fr} }
+    @media (max-width: 800px){ .news-grid{grid-template-columns:1fr 1fr} }
+    @media (max-width: 560px){ .news-grid{grid-template-columns:1fr} }
+    .news-card{background:#fff; border-radius:16px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column}
+    .news-card .img{aspect-ratio:16/10; background:#ddd center/cover no-repeat}
+    .news-card .text{padding:1rem 1.05rem}
+    .news-card h4{font-weight:700; font-size:1rem; line-height:1.3}
+    .news-card p{color:var(--muted); margin-top:.4rem; font-size:.95rem}
+
+    .split{display:grid; grid-template-columns:1.05fr .95fr; gap:1.1rem}
+    @media (max-width: 900px){ .split{grid-template-columns:1fr} }
+    .photo{min-height:380px; background:#ddd center/cover no-repeat; border-radius:16px; overflow:hidden; position:relative}
+    .stats{position:absolute; inset:auto 0 0 0; display:flex; gap:1rem; padding:1rem; background:linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.55)); color:#fff}
+    .stat{display:flex; align-items:center; gap:.5rem; background:rgba(0,0,0,.4); padding:.4rem .6rem; border-radius:10px; font-weight:600}
+    .cta-panel{background:#fff; border-radius:16px; box-shadow:var(--shadow); padding:1.2rem}
+    .eyebrow{color:var(--primary); font-weight:700; text-transform:uppercase; font-size:.8rem; letter-spacing:.05em}
+    .h2{font-family:Montserrat, sans-serif; font-size:clamp(1.6rem,3.2vw,2.2rem); font-weight:800; margin:.35rem 0 .4rem}
+    .features{display:grid; grid-template-columns:repeat(3, 1fr); gap:.7rem; margin-top:.8rem}
+    @media (max-width: 760px){ .features{grid-template-columns:1fr 1fr} }
+    @media (max-width: 520px){ .features{grid-template-columns:1fr} }
+    .feat{border:1px dashed #e5e7eb; border-radius:14px; padding:.9rem; text-align:center; background:#fff}
+    .feat strong{display:block; margin-top:.35rem}
+
+    .wa{position:fixed; right:18px; bottom:18px; width:56px; height:56px; background:var(--whatsapp); border-radius:999px; box-shadow:var(--shadow); display:grid; place-items:center; color:#fff; font-size:1.6rem; z-index:60}
+
+    footer{background:var(--dark); color:#d1d5db; padding:2.2rem 0 2rem; margin-top:30px}
+    .footer-grid{display:grid; grid-template-columns:1.2fr 1fr 1fr 1.1fr; gap:1rem; align-items:start}
+    @media (max-width: 1000px){ .footer-grid{grid-template-columns:1fr 1fr} }
+    @media (max-width: 560px){ .footer-grid{grid-template-columns:1fr} }
+    .fbrand{display:flex; align-items:center; gap:.6rem; color:#fff; font-weight:800}
+    .foot-links a{display:block; padding:.22rem 0; opacity:.9}
+    .contact-card{background:#0f2a23; border-radius:14px; padding:1rem; color:#eafaf3}
+    .contact-card .btn{background:#1f8a53; color:#fff}
+    .copyright{border-top:1px solid rgba(255,255,255,.08); margin-top:1.2rem; padding-top:1rem; font-size:.92rem; text-align:center}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10" stroke="#111" stroke-width="2"/>
+          <path d="M6 14c2-3 4-4 6-4s4 1 6 4" stroke="#111" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+        <span>CUMBRES ETERNAS</span>
+      </div>
+      <nav class="menu">
+        <a href="#inicio">Inicio</a>
+        <a href="#conocer">Conócenos</a>
+        <a href="#tours">Tours</a>
+        <a href="#noticias">Noticias</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <button class="burger" id="burger" aria-label="Abrir menú">☰</button>
+    </div>
+    <div class="mobile" id="mobile">
+      <a href="#inicio">Inicio</a>
+      <a href="#conocer">Conócenos</a>
+      <a href="#tours">Tours</a>
+      <a href="#noticias">Noticias</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+  </header>
+
+  <section id="inicio" class="hero">
+    <div class="hero-top">
+      <div class="container hero-inner">
+        <div>
+          <h1 class="title">Bienvenido a Cumbres Eternas</h1>
+          <p class="lede">Explora cumbres, valles y rutas inolvidables. Aventuras diseñadas para todos los niveles.</p>
+          <p style="margin-top:.8rem; color:#374151">Texto de ejemplo que podrás reemplazar por tu descripción y propuesta de valor.</p>
+          <div style="margin-top:1rem; display:flex; gap:.7rem; flex-wrap:wrap">
+            <a class="btn btn-primary" href="#tours">Ver tours</a>
+            <a class="btn btn-outline" href="#noticias">Últimas noticias</a>
+          </div>
+        </div>
+        <div class="hero-img">
+          <img alt="Imagen hero de montañas" src="https://images.unsplash.com/photo-1509587584298-0f3b3f9f61f7?q=80&w=2069&auto=format&fit=crop" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-band">Cumbres que inspiran — experiencias reales</div>
+
+  <section id="noticias">
+    <div class="container news-grid">
+      <article class="news-card">
+        <div class="img" style="background-image:url('https://images.unsplash.com/photo-1549880338-65ddcdfd017b?q=80&w=2069&auto=format&fit=crop')"></div>
+        <div class="text">
+          <h4>Nueva temporada de trekking</h4>
+          <p>Rutas renovadas y salidas grupales semanales.</p>
+        </div>
+      </article>
+      <article class="news-card">
+        <div class="img" style="background-image:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2069&auto=format&fit=crop')"></div>
+        <div class="text">
+          <h4>Fotografía de montaña</h4>
+          <p>Taller práctico en cumbres nevadas.</p>
+        </div>
+      </article>
+      <article class="news-card">
+        <div class="img" style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2069&auto=format&fit=crop')"></div>
+        <div class="text">
+          <h4>Seguridad en alta montaña</h4>
+          <p>Guía rápida para tu próxima aventura.</p>
+        </div>
+      </article>
+      <article class="news-card">
+        <div class="img" style="background-image:url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2069&auto=format&fit=crop')"></div>
+        <div class="text">
+          <h4>Rutas familiares</h4>
+          <p>Senderos suaves para disfrutar con niños.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="tours">
+    <div class="container split">
+      <div class="photo" style="background-image:url('https://images.unsplash.com/photo-1523419409543-8a5a6a0b7b38?q=80&w=1974&auto=format&fit=crop')">
+        <div class="stats">
+          <div class="stat">+15k Aventureros</div>
+          <div class="stat">100+ Grandes recorridos</div>
+          <div class="stat">840+ Salidas guiadas</div>
+        </div>
+      </div>
+      <div class="cta-panel">
+        <div class="eyebrow">Es tiempo de conocer</div>
+        <div class="h2">Escoge tu tour favorito</div>
+        <p>Elige entre nuestras experiencias pensadas para mar, montaña y aventura. Personaliza tu viaje y nosotros nos encargamos del resto.</p>
+        <div class="features">
+          <div class="feat"><div>🧗</div><strong>Aventura</strong><span style="color:var(--muted); font-size:.95rem">Vías ferratas, cañones</span></div>
+          <div class="feat"><div>🏖️</div><strong>Mar y playa</strong><span style="color:var(--muted); font-size:.95rem">Costas y relax</span></div>
+          <div class="feat"><div>⛰️</div><strong>Montañas</strong><span style="color:var(--muted); font-size:.95rem">Trekking y cumbres</span></div>
+        </div>
+        <div style="margin-top:1rem"><a class="btn btn-primary" href="#contacto">Reservar ahora</a></div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contacto">
+    <div class="container footer-grid">
+      <div>
+        <div class="fbrand">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="#fff" stroke-width="2"/>
+            <path d="M6 14c2-3 4-4 6-4s4 1 6 4" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>
+          Cumbres Eternas
+        </div>
+        <p style="margin-top:.6rem">Proyecto de experiencias al aire libre. Naturaleza, descanso y aventura con guías locales.</p>
+        <div style="display:flex; gap:.6rem; margin-top:.8rem">
+          <a aria-label="Instagram" href="#"><img alt="" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" width="22"/></a>
+          <a aria-label="Facebook" href="#"><img alt="" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" width="22"/></a>
+          <a aria-label="YouTube" href="#"><img alt="" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" width="22"/></a>
+        </div>
+      </div>
+      <div class="foot-links">
+        <h4>Navegación</h4>
+        <a href="#inicio">Inicio</a>
+        <a href="#tours">Tours</a>
+        <a href="#noticias">Noticias</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div class="foot-links">
+        <h4>Links rápidos</h4>
+        <a href="#">Política de privacidad</a>
+        <a href="#">Términos & condiciones</a>
+      </div>
+      <div>
+        <h4>¿Cómo llegar?</h4>
+        <p>Dirección o punto de encuentro — reemplaza por tu ubicación.</p>
+        <div class="contact-card" style="margin-top:.6rem">
+          <p>¿Dudas? Escríbenos</p>
+          <a class="btn" href="mailto:contacto@cumbreseternas.com">Contáctanos</a>
+        </div>
+      </div>
+    </div>
+    <div class="container copyright">
+      © <span id="year"></span> Cumbres Eternas — Todos los derechos reservados
+    </div>
+  </footer>
+
+  <a class="wa" href="https://wa.me/51999999999" target="_blank" rel="noopener" aria-label="WhatsApp">✆</a>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const burger = document.getElementById('burger');
+    const mobile = document.getElementById('mobile');
+    burger?.addEventListener('click', ()=>{
+      const open = mobile.style.display === 'block';
+      mobile.style.display = open ? 'none' : 'block';
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href');
+        if(id && id.length > 1){
+          const el = document.querySelector(id);
+          if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth'}); }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
